@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IBKR logo">
+  <rect width="512" height="512" fill="#000000"/>
+  <path d="M0 222L232 0L95 296L0 512V222Z" fill="#E31937"/>
+  <path d="M0 512L95 296L232 512H0Z" fill="#E31937"/>
+  <path d="M0 512L95 296L170 415L76 512H0Z" fill="url(#shadow)"/>
+  <circle cx="304" cy="278" r="78" fill="#E31937"/>
+  <defs>
+    <linearGradient id="shadow" x1="0" y1="512" x2="165" y2="356" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#780012" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#E31937" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>

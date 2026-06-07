@@ -1,0 +1,11 @@
+{
+  "name": "ibkr-analytics-studio",
+  "version": "2.1.8",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "node --check src/encoding.js && node --check src/parser.js && node --check src/reportLanguage.js && node --check src/app.js",
+    "serve": "node serve.mjs"
+  }
+}
