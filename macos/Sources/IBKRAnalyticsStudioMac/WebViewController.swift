@@ -43,8 +43,9 @@ final class WebViewController: NSViewController, WKScriptMessageHandler, WKNavig
             return
         }
 
+        let body = message.body
         Task {
-            await handleBridgePayload(message.body)
+            await handleBridgePayload(body)
         }
     }
 

@@ -25,7 +25,9 @@ final class StaticFileServer {
                 guard let endpointPort = NWEndpoint.Port(rawValue: port) else {
                     continue
                 }
-                let listener = try NWListener(using: .tcp, on: endpointPort)
+                let parameters = NWParameters.tcp
+                parameters.requiredLocalEndpoint = .hostPort(host: .ipv4(IPv4Address("127.0.0.1")!), port: endpointPort)
+                let listener = try NWListener(using: parameters, on: endpointPort)
                 let server = StaticFileServer(root: root, port: port, listener: listener)
                 server.start()
                 return server
@@ -80,9 +82,9 @@ final class StaticFileServer {
             return response(status: "405 Method Not Allowed", contentType: "text/plain; charset=utf-8", body: Data("Method not allowed".utf8))
         }
 
-        let body = parts[0] == "HEAD" ? nil : fileBody(for: String(parts[1]))
-        if let body {
-            return response(status: "200 OK", contentType: body.contentType, body: body.data)
+        if let body = fileBody(for: String(parts[1])) {
+            let responseBody = parts[0] == "HEAD" ? Data() : body.data
+            return response(status: "200 OK", contentType: body.contentType, body: responseBody)
         }
 
         return response(status: "404 Not Found", contentType: "text/plain; charset=utf-8", body: Data("Not found".utf8))
