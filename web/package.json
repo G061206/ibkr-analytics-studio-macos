@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "check": "node --check src/encoding.js && node --check src/parser.js && node --check src/reportLanguage.js && node --check src/app.js",
+    "smoke": "node scripts/smoke.mjs",
     "serve": "node serve.mjs"
   }
 }

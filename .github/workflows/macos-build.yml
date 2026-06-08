@@ -43,6 +43,10 @@ jobs:
         working-directory: web
         run: npm run check
 
+      - name: Smoke test sample parser
+        working-directory: web
+        run: npm run smoke
+
       - name: Build macOS shell
         working-directory: macos
         run: swift build -v
