@@ -25,9 +25,17 @@ concurrency:
 
 jobs:
   build:
-    name: Build Swift macOS scaffold
-    runs-on: macos-latest
+    name: Build and package (${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            arch: ARM64
+          - os: macos-15-intel
+            arch: X64
 
     steps:
       - name: Checkout
@@ -57,7 +65,7 @@ jobs:
       - name: Upload unsigned installer artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: IBKRAnalyticsStudio-macOS-unsigned-${{ runner.arch }}
+          name: IBKRAnalyticsStudio-macOS-unsigned-${{ matrix.arch }}
           path: |
             dist/*.zip
             dist/*.dmg

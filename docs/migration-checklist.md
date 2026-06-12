@@ -10,7 +10,7 @@
 - Added WKWebView bridge.
 - Ported Flex API request flow to Swift.
 - Ported GitHub release update check to Swift.
-- Added unsigned `.app` zip and `.dmg` packaging in GitHub Actions.
+- Added unsigned `.app` zip and `.dmg` packaging in GitHub Actions for Apple Silicon and Intel runners.
 
 ## Next
 
