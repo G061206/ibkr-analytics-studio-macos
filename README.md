@@ -58,6 +58,17 @@ swift build
 swift run IBKRAnalyticsStudioMac
 ```
 
+To create an unsigned app bundle and installer artifacts from the repository root:
+
+```bash
+bash macos/scripts/package_app.sh
+```
+
+The packaging script creates:
+
+- `dist/IBKRAnalyticsStudio-2.1.8-macos-<arch>-unsigned.zip`
+- `dist/IBKRAnalyticsStudio-2.1.8-macos-<arch>-unsigned.dmg`
+
 Then verify:
 
 - sample report loads with `http://127.0.0.1:4187/?sample=1`
@@ -70,6 +81,6 @@ Then verify:
 
 ## Important Notes
 
-- This is a migration scaffold, not a signed `.app` release yet.
-- Packaging still needs an Xcode project or app-bundle script, code signing, hardened runtime, and notarization.
+- GitHub Actions can now produce an unsigned `.app` zip and `.dmg` artifact.
+- Code signing, hardened runtime, and notarization are still needed for a smooth public macOS install experience.
 - Token storage currently matches the Windows behavior and remains in webview `localStorage`; a later hardening pass can move it to Keychain.

@@ -50,3 +50,15 @@ jobs:
       - name: Build macOS shell
         working-directory: macos
         run: swift build -v
+
+      - name: Package unsigned macOS app
+        run: bash macos/scripts/package_app.sh
+
+      - name: Upload unsigned installer artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: IBKRAnalyticsStudio-macOS-unsigned-${{ runner.arch }}
+          path: |
+            dist/*.zip
+            dist/*.dmg
+          if-no-files-found: error
