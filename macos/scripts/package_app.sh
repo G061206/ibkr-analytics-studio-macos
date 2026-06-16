@@ -75,7 +75,14 @@ cat > "$CONTENTS_DIR/Info.plist" <<PLIST
 PLIST
 
 plutil -lint "$CONTENTS_DIR/Info.plist"
-IBKR_SELF_TEST=1 "$MACOS_BIN_DIR/$EXECUTABLE_NAME"
+SELF_TEST_LOG="$DIST_DIR/self-test.log"
+SELF_TEST_STATUS="$DIST_DIR/self-test.status"
+set +e
+IBKR_SELF_TEST=1 "$MACOS_BIN_DIR/$EXECUTABLE_NAME" > "$SELF_TEST_LOG" 2>&1
+SELF_TEST_EXIT_CODE=$?
+set -e
+cat "$SELF_TEST_LOG"
+echo "$SELF_TEST_EXIT_CODE" > "$SELF_TEST_STATUS"
 
 ARCH_NAME="$(uname -m)"
 ZIP_PATH="$DIST_DIR/IBKRAnalyticsStudio-${APP_VERSION}-macos-${ARCH_NAME}-unsigned.zip"

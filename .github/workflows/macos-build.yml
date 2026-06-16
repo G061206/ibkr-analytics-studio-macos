@@ -75,9 +75,15 @@ jobs:
 
       - name: Upload unsigned installer artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: IBKRAnalyticsStudio-macOS-unsigned-${{ matrix.arch }}
           path: |
             dist/*.zip
             dist/*.dmg
+            dist/self-test.log
+            dist/self-test.status
           if-no-files-found: error
+
+      - name: Assert packaged app self-test passed
+        run: test "$(cat dist/self-test.status)" = "0"
