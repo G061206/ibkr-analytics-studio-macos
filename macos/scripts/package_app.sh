@@ -75,7 +75,9 @@ cat > "$CONTENTS_DIR/Info.plist" <<PLIST
 PLIST
 
 plutil -lint "$CONTENTS_DIR/Info.plist"
-IBKR_SELF_TEST=1 "$MACOS_BIN_DIR/$EXECUTABLE_NAME"
+SELF_TEST_BIN="$MACOS_BIN_DIR/$EXECUTABLE_NAME" \
+  IBKR_SELF_TEST=1 \
+  ruby -rtimeout -e 'Timeout.timeout(30) { system(ENV.fetch("SELF_TEST_BIN")) || exit(1) }'
 
 ARCH_NAME="$(uname -m)"
 ZIP_PATH="$DIST_DIR/IBKRAnalyticsStudio-${APP_VERSION}-macos-${ARCH_NAME}-unsigned.zip"

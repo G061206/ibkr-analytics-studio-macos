@@ -59,7 +59,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             try await BundleSelfTest.run()
             print("IBKR Analytics Studio self-test passed")
-            NSApp.terminate(nil)
+            exit(0)
         } catch {
             fputs("IBKR Analytics Studio self-test failed: \(error.localizedDescription)\n", stderr)
             exit(1)
