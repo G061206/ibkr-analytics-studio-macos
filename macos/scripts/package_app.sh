@@ -75,6 +75,7 @@ cat > "$CONTENTS_DIR/Info.plist" <<PLIST
 PLIST
 
 plutil -lint "$CONTENTS_DIR/Info.plist"
+IBKR_SELF_TEST=1 "$MACOS_BIN_DIR/$EXECUTABLE_NAME"
 
 ARCH_NAME="$(uname -m)"
 ZIP_PATH="$DIST_DIR/IBKRAnalyticsStudio-${APP_VERSION}-macos-${ARCH_NAME}-unsigned.zip"

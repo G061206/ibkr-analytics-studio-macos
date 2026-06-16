@@ -71,6 +71,8 @@ The packaging script creates:
 
 GitHub Actions builds unsigned artifacts for both Apple Silicon (`ARM64`) and Intel (`X64`) runners.
 
+The packaged app also runs a CI self-test before artifacts are uploaded. The self-test starts the bundled app executable with `IBKR_SELF_TEST=1`, verifies the bundled `web/` files, starts the local server, and fetches the app HTML, JavaScript, and sample CSV through `127.0.0.1`.
+
 Then verify:
 
 - sample report loads with `http://127.0.0.1:4187/?sample=1`

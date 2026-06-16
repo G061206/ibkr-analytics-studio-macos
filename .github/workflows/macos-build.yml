@@ -62,6 +62,17 @@ jobs:
       - name: Package unsigned macOS app
         run: bash macos/scripts/package_app.sh
 
+      - name: Verify installer contents
+        run: |
+          set -euo pipefail
+          test -d "dist/IBKR Analytics Studio.app"
+          test -x "dist/IBKR Analytics Studio.app/Contents/MacOS/IBKRAnalyticsStudioMac"
+          test -f "dist/IBKR Analytics Studio.app/Contents/Resources/web/index.html"
+          test -f "dist/IBKR Analytics Studio.app/Contents/Resources/web/src/app.js"
+          plutil -lint "dist/IBKR Analytics Studio.app/Contents/Info.plist"
+          unzip -t dist/*.zip
+          hdiutil verify dist/*.dmg
+
       - name: Upload unsigned installer artifacts
         uses: actions/upload-artifact@v4
         with:
