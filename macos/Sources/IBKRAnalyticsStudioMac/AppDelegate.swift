@@ -1,20 +1,12 @@
 import AppKit
 import WebKit
 
-@main
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var window: NSWindow?
     private var webController: WebViewController?
     private var staticServer: StaticFileServer?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if ProcessInfo.processInfo.environment["IBKR_SELF_TEST"] == "1" {
-            Task {
-                await runSelfTestAndExit()
-            }
-            return
-        }
-
         do {
             let webRoot = try ContentLocator.resolveWebRoot()
             let server = try StaticFileServer.start(root: webRoot, preferredPort: 4187)
@@ -53,16 +45,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         alert.informativeText = error.localizedDescription
         alert.alertStyle = .critical
         alert.runModal()
-    }
-
-    private func runSelfTestAndExit() async {
-        do {
-            try await BundleSelfTest.run()
-            print("IBKR Analytics Studio self-test passed")
-            exit(0)
-        } catch {
-            fputs("IBKR Analytics Studio self-test failed: \(error.localizedDescription)\n", stderr)
-            exit(1)
-        }
     }
 }
