@@ -24,15 +24,27 @@ enum BundleSelfTest {
     }
 
     private static func assertHTTP(_ url: URL, contains expectedText: String) async throws {
-        let (data, response) = try await URLSession.shared.data(from: url)
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw SelfTestError("Expected HTTP 200 for \(url.absoluteString)")
+        var lastError: Error?
+
+        for _ in 0..<20 {
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw SelfTestError("Expected HTTP 200 for \(url.absoluteString)")
+                }
+
+                let text = String(data: data, encoding: .utf8) ?? ""
+                guard text.contains(expectedText) else {
+                    throw SelfTestError("Response for \(url.absoluteString) did not contain expected text.")
+                }
+                return
+            } catch {
+                lastError = error
+                try await Task.sleep(nanoseconds: 100_000_000)
+            }
         }
 
-        let text = String(data: data, encoding: .utf8) ?? ""
-        guard text.contains(expectedText) else {
-            throw SelfTestError("Response for \(url.absoluteString) did not contain expected text.")
-        }
+        throw lastError ?? SelfTestError("Could not fetch \(url.absoluteString)")
     }
 }
 
