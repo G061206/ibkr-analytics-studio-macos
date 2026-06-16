@@ -27,7 +27,7 @@ final class StaticFileServer {
                 }
                 let parameters = NWParameters.tcp
                 parameters.requiredLocalEndpoint = .hostPort(host: .ipv4(IPv4Address("127.0.0.1")!), port: endpointPort)
-                let listener = try NWListener(using: parameters, on: endpointPort)
+                let listener = try NWListener(using: parameters)
                 let server = StaticFileServer(root: root, port: port, listener: listener)
                 server.start()
                 return server
